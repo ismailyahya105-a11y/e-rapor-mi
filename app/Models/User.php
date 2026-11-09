@@ -7,6 +7,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -33,5 +35,28 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
+    }
+
+    public function isWali(): bool
+    {
+        return $this->role === 'wali';
+    }
+
+    /**
+     * @return HasMany<GuardianStudent, $this>
+     */
+    public function guardianStudents(): HasMany
+    {
+        return $this->hasMany(GuardianStudent::class);
+    }
+
+    /**
+     * @return BelongsToMany<Student, $this>
+     */
+    public function students(): BelongsToMany
+    {
+        return $this->belongsToMany(Student::class, 'guardian_students', 'user_id', 'student_id')
+            ->withPivot('relationship')
+            ->withTimestamps();
     }
 }

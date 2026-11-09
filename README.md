@@ -1,58 +1,84 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RAPORTKU — Sistem E-Rapor Madrasah Ibtidaiyah (MI)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi pengelolaan data induk siswa, penempatan rombongan belajar, kurikulum madrasah, serta sistem penilaian akademik dan nonakademik berbasis standar Kementerian Agama Republik Indonesia (Kemenag).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Identitas Proyek
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Nama Aplikasi**: RAPORTKU
+- **Framework**: Laravel 12 (PHP 8.4)
+- **Lingkungan Lokal**: Laravel Herd (`http://e-rapor-mi.test`)
+- **Database**: SQLite
+- **Frontend**: Blade, Tailwind CSS v4, Vite
+- **Tema Desain**: Emerald Green & Gold Accent
+- **Bahasa**: Bahasa Indonesia
+- **Zona Waktu**: `Asia/Jakarta`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Fitur Utama
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Autentikasi & Otorisasi Pengguna
+- Login terpusat dengan pemisahan peran:
+  - **Administrator / Guru**: Akses penuh ke dashboard admin, data master, serta penilaian akademik dan nonakademik.
+  - **Wali Siswa**: Akses ke Portal Wali yang terisolasi ketat di sisi server (hanya dapat melihat data anak kandung).
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Manajemen Data Master (Tahap 3)
+- Tahun Ajaran & Semester (Ganjil/Genap) dengan penjagaan 1 semester aktif tunggal.
+- Kelas Rombel (Tingkat 1 s/d 6).
+- Data Siswa (NIS unik berformat teks menjaga leading zero, NISN opsional, biodata).
+- Penempatan Kelas Siswa per semester dengan riwayat historis tanpa saling menimpa.
+- Master Mata Pelajaran (Kode unik, urutan tampilan rapor, status aktif).
+- Penugasan Mata Pelajaran ke Kelas dan Semester.
+- Manajemen Akun Wali & Pemetaan Siswa ke Akun Wali (1 wali dapat memantau beberapa anak).
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 3. Sistem Penilaian Akademik Siswa (Tahap 4)
+- **Pengaturan Komponen Penilaian** (`/admin/pengaturan-penilaian`): Atur bobot per mapel & semester dengan validasi 100% dan preset 1-klik.
+- **Input Penilaian Akademik Massal** (`/admin/penilaian-akademik`): Pembedaan tegas nilai kosong (`NULL`) vs angka `0`, live client-side preview, dan saran deskripsi capaian pembelajaran otomatis.
+- **Rekap Penilaian Akademik** (`/admin/rekap-nilai`): 6 kartu metrik riil, predikat (A, B, C, D), dan layout siap cetak.
 
-## Agentic Development
+### 4. Sistem Penilaian Nonakademik Siswa (Tahap 5)
+- **Penilaian Sikap dan Perilaku** (`/admin/sikap`): Penilaian 7 aspek sikap (Kedisiplinan, Tanggung Jawab, Sopan Santun, Kejujuran, Kerja Sama, Kemandirian, Kepedulian), rating (Sangat Baik, Baik, Cukup, Perlu Bimbingan), catatan perkembangan, dan rangkuman sikap umum.
+- **Kehadiran Siswa** (`/admin/kehadiran`): Presensi harian massal dan rekapitulasi kehadiran semester (Hadir, Sakit, Izin, Alpa) dengan pencegahan data tanggal ganda.
+- **Keaktifan Belajar Siswa** (`/admin/keaktifan`): Dokumentasi pengamatan konkret keaktifan bertanya, diskusi, kegiatan kelas, dan inisiatif belajar.
+- **Ekstrakurikuler** (`/admin/ekstrakurikuler`): Master kegiatan ekstrakurikuler madrasah dan pencatatan capaian keikutsertaan siswa per semester.
+- **Prestasi Siswa** (`/admin/prestasi`): Pencatatan kejuaraan santri dari tingkat madrasah s.d. internasional.
+- **Catatan Wali Kelas** (`/admin/catatan-wali-kelas`): Evaluasi komprehensif 6 dimensi perkembangan belajar, adab, kedisiplinan, potensi, perbaikan, dan saran kepada orang tua.
+- **Rekapitulasi Nonakademik** (`/admin/rekap-nonakademik`): Halaman rekapitulasi seluruh aspek nonakademik kelas dan lembar portofolio detail per siswa (`/admin/rekap-nonakademik/{student}`).
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+---
+
+## 🔑 Akun Demo Pengujian
+
+| Peran | Email | Kata Sandi | Halaman Utama |
+| :--- | :--- | :--- | :--- |
+| **Administrator** | `admin@raportku.test` | `password` | `http://e-rapor-mi.test/admin` |
+| **Wali Siswa (2 Anak)** | `wali@raportku.test` | `password` | `http://e-rapor-mi.test/wali` |
+| **Wali Siswa (1 Anak)** | `wali.rizky@raportku.test` | `password` | `http://e-rapor-mi.test/wali` |
+| **Wali Baru (0 Anak)** | `wali.baru@raportku.test` | `password` | `http://e-rapor-mi.test/wali` |
+
+---
+
+## 💻 Panduan Pengujian & Build Lokal
 
 ```bash
-composer require laravel/boost --dev
+# Menjalankan Seluruh Pengujian (Pest) — 62 Tests
+php vendor/bin/pest
 
-php artisan boost:install
+# Menjalankan Pengujian Fitur Nonakademik
+php vendor/bin/pest tests/Feature/NonAcademicAssessmentTest.php
+
+# Menjalankan Pemformat Kode (Laravel Pint)
+php vendor/bin/pint --format agent
+
+# Melakukan Kompilasi Aset Frontend (Vite)
+npm run build
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+## 📁 Struktur Dokumentasi
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- [`docs/PRD.md`](docs/PRD.md) — Product Requirement Document & Spesifikasi Sistem.
+- [`docs/PROGRESS.md`](docs/PROGRESS.md) — Catatan Kemajuan dan Riwayat Pengujian Setiap Tahap.

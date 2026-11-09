@@ -33,7 +33,7 @@
                 <a href="#fitur" class="transition hover:text-emerald-700">Fitur</a>
                 <a href="#panduan" class="transition hover:text-emerald-700">Panduan</a>
             </nav>
-            <a href="{{ route('login') }}" class="rounded-full bg-emerald-800 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-emerald-950/15 transition hover:bg-emerald-950">Masuk Portal →</a>
+            <a href="{{ route('login') }}" class="rounded-full bg-emerald-800 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-emerald-950/15 transition hover:bg-emerald-950">Login</a>
             </div>
         </div>
     </header>
